@@ -6,7 +6,7 @@ const router = Router();
 router.use(requireAuth);
 
 /** GET /tags — list all tags for the authenticated user. */
-router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.get('/tags', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const tags = await listTags(req.userId!);
     res.json(tags);
@@ -16,7 +16,7 @@ router.get('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
 });
 
 /** POST /tags — create a new tag. */
-router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.post('/tags', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const tag = await createTag(req.userId!, req.body);
     res.status(201).json(tag);
@@ -26,7 +26,7 @@ router.post('/', async (req: AuthRequest, res: Response, next: NextFunction) => 
 });
 
 /** DELETE /tags/:id — remove a tag (cascades to task associations). */
-router.delete('/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
+router.delete('/tags/:id', async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     await deleteTag(req.params.id, req.userId!);
     res.status(204).send();
